@@ -1,0 +1,13 @@
+<section class="detail-container">
+  <img src="{{product!.url}}" alt="cover">
+  <aside class="detail-item">
+    <h3>{{product!.name}}</h3>
+    <h6>{{product!.price}}$</h6>
+    <h5>{{product!.description}}</h5>
+    <form (ngSubmit)="cartService.addToCart(product, quantity)" #form="ngForm">
+      <input type="number" name="quantity" class="select-input" [(ngModel)]="quantity" min="1"><br>
+      <button class="btn btn-primary" value="submit" [disabled]="form.invalid">Add to cart</button><br>
+    </form>
+    <a routerLink="/" class="back-link">← Back to product list</a>
+  </aside>
+</section>

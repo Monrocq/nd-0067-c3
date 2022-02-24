@@ -1,0 +1,36 @@
+<section class="cart-container">
+  <div class="cart-panel">
+    <div class="cart-item" *ngFor="let product of cartService.cart | keyvalue">
+      <img src="{{product.key.url}}" alt="product">
+      <div class="cart-item-details">
+        <b>{{product.key.name}}</b>
+        <strong>${{product.key.price}}</strong>
+        <em>Amount: </em>
+        <input type="number" class="number-input" [ngModel]="product.value" min="1" (ngModelChange)="updateQuantity(product.key, $event)">
+        <ins (click)="removeProduct(product.key)" style="cursor: pointer">Remove</ins>
+      </div>
+    </div>
+    <strong>Total: ${{total.toFixed(2)}}</strong>
+    <div class="empty-cart-message" *ngIf="!cartService.cart.size">
+      <p>Cart Empty</p>
+    </div>
+  </div>
+  <form class="form-margin" #purchase="ngForm">
+    <div>
+      <label for="name">Full name</label><br>
+      <input required type="text" [(ngModel)]="name" name="name" id="name" minlength="3" placeholder="(Minimum 3 characters)">
+    </div>
+    <div>
+      <label for="address">Address</label><br>
+      <input required type="text" [(ngModel)]="address" name="address" id="address" minlength="6" placeholder="(minimum 6 characters)">
+    </div>
+    <div>
+      <label for="ccn">Credit card number</label><br>
+      <input required type="text" [(ngModel)]="ccn" name="ccn" id="ccn" minlength="16" maxlength="16" placeholder="(16-digit number)">
+    </div>
+    <i>We'll never share your payment details with anyone else</i><br>
+    <button type="submit" value="Submit" class="btn btn-primary" [disabled]="!cartService.cart.size || purchase.invalid">
+      <a [href]="getAction()" style="color: white;">Submit</a>
+    </button>
+  </form>
+</section>
