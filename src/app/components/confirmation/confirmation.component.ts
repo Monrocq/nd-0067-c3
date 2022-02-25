@@ -9,11 +9,15 @@ import { ActivatedRoute } from '@angular/router';
 export class ConfirmationComponent implements OnInit {
 
   name: string = '';
+  total: string = '';
 
   constructor(private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => this.name = params['name']);
+    this.route.queryParams.subscribe(params => {
+      this.name = params['name'];
+      this.total = params['total'];
+    });
   }
 
 }

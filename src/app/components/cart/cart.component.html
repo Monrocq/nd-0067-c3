@@ -15,21 +15,25 @@
       <p>Cart Empty</p>
     </div>
   </div>
-  <form class="form-margin" #purchase="ngForm">
+  <form class="form-margin form-group" #purchase="ngForm" [formGroup]="form">
     <div>
       <label for="name">Full name</label><br>
-      <input required type="text" [(ngModel)]="name" name="name" id="name" minlength="3" placeholder="(Minimum 3 characters)">
+      <input required type="text" [(ngModel)]="name" name="name" id="name" minlength="3" placeholder="(Minimum 3 characters)" [ngModelOptions]="{standalone: true}">
     </div>
     <div>
       <label for="address">Address</label><br>
-      <input required type="text" [(ngModel)]="address" name="address" id="address" minlength="6" placeholder="(minimum 6 characters)">
+      <input required type="text" [(ngModel)]="address" name="address" id="address" minlength="6" placeholder="(minimum 6 characters)" [ngModelOptions]="{standalone: true}">
     </div>
     <div>
       <label for="ccn">Credit card number</label><br>
-      <input required type="text" [(ngModel)]="ccn" name="ccn" id="ccn" minlength="16" maxlength="16" placeholder="(16-digit number)">
+      <input required type="text" [(ngModel)]="ccn" name="ccn" id="ccn" minlength="16" maxlength="16" placeholder="(16-digit number)" formControlName="number" />
+      <div *ngIf="f['number'].touched && f['number'].invalid" class="alert alert-danger">
+        <div *ngIf="f['number'].errors!['required']">Number is required.</div>
+        <div *ngIf="f['number'].errors!['pattern']">Enter only number.</div>
+    </div>
     </div>
     <i>We'll never share your payment details with anyone else</i><br>
-    <button type="submit" value="Submit" class="btn btn-primary" [disabled]="!cartService.cart.size || purchase.invalid">
+    <button type="submit" value="Submit" class="btn btn-primary" [disabled]="!cartService.cart.size || purchase.invalid || !form.valid">
       <a [href]="getAction()" style="color: white;">Submit</a>
     </button>
   </form>

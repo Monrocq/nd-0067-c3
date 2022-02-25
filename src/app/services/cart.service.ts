@@ -18,7 +18,7 @@ export class CartService {
 
   public addToCart(product: Product, quantity: number) {
     this.setItem(product, quantity)
-    alert("Product added!")
+    alert(product.name+" added to the cart!")
   }
 
   setItem(product: Product, quantity: number) {
@@ -31,5 +31,6 @@ export class CartService {
     let cartUpdated: Map<Product, number> = this.cart;
     cartUpdated.delete(product);
     this.cartSource.next(cartUpdated);
+    alert(product.name+" removed from the cart!")
   }
 }
