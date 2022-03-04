@@ -7,6 +7,7 @@ orbs:
   # Orbs reduce the amount of configuration required for common tasks.
   # See the orb documentation here: https://circleci.com/developer/orbs/orb/circleci/node
   node: circleci/node@4.7
+  aws-s3: circleci/aws-s3@3.0.0
 
 jobs:
   # Below is the definition of your job to build and test your app, you can rename and customize it as you want.
@@ -27,8 +28,12 @@ jobs:
           # If you are using yarn, change the line below from "npm" to "yarn"
           pkg-manager: npm
       - run:
-          name: Run tests
-          command: npm test
+          name: Run build
+          command: npm run build
+      - aws-s3/sync:
+          arguments: --acl public-read
+          from: /project/dist/ 
+          to: s3://udacity-store 
 
 workflows:
   # Below is the definition of your workflow.
